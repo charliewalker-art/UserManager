@@ -3,17 +3,15 @@ package com.example.UserManager.service;
 import com.example.UserManager.entity.Role;
 import com.example.UserManager.repository.RoleRepository;
 import org.springframework.stereotype.Service;
-
+import lombok.RequiredArgsConstructor;
 import java.util.List;
 
+@RequiredArgsConstructor
 @Service
+
 public class RoleService {
 
     private final RoleRepository roleRepository;
-
-    public RoleService(RoleRepository roleRepository) {
-        this.roleRepository = roleRepository;
-    }
 
     // get all roles
     public List<Role> getAllRoles() {

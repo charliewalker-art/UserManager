@@ -21,6 +21,13 @@ public class UserController {
         return userService.getAllUsers();
     }
 
+    // récupérer un utilisateur par id
+    @GetMapping("/{id}")
+    public User getUserById(@PathVariable Integer id) {
+        return userService.getUserById(id);
+    }
+
+
     // add new user
     @PostMapping
     public User createUser(@RequestBody User user) {
@@ -33,5 +40,12 @@ public class UserController {
         userService.deleteUser(id);
         return "User deleted successfully";
     }
+
+    //update user
+    @PutMapping("/{id}")
+    public User updateUser(@PathVariable Integer id, @RequestBody User userDetails) {
+        return userService.updateUser(id, userDetails);
+    }
+
 
 }

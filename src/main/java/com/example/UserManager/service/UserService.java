@@ -7,18 +7,18 @@ import com.example.UserManager.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import com.example.UserManager.entity.Role;
+import lombok.RequiredArgsConstructor;
 
 
 @Service
+@RequiredArgsConstructor
+
 public class UserService {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
 
-    public UserService(UserRepository userRepository, RoleRepository roleRepository) {
-        this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
-    }
+
 
     // get all users
     public List<User> getAllUsers() {
@@ -52,4 +52,28 @@ public class UserService {
     public void deleteUser(Integer id) {
         userRepository.deleteById(id);
     }
+
+    // update user
+    public User updateUser(Integer id, User userDetails) {
+        User user = userRepository.findById(id).orElse(null);
+
+        if (user == null) {
+            throw new RuntimeException("User not found");
+        }
+
+        // vérifier si l'email appartient déjà à un autre utilisateur
+        if (!user.getEmail().equals(userDetails.getEmail()) &&
+                userRepository.existsByEmail(userDetails.getEmail())) {
+            throw new RuntimeException("Email already exists");
+        }
+
+        user.setName(userDetails.getName());
+        user.setEmail(userDetails.getEmail());
+        user.setPassword(userDetails.getPassword());
+
+        return userRepository.save(user);
+    }
+
+
+
 }
