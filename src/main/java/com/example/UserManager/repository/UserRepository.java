@@ -10,4 +10,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     //methode to search for user by email
     Optional<User> findByEmail(String email);
 
+    //methode to check if user with given email already exists
+    boolean existsByEmail(String email);
+
 }
