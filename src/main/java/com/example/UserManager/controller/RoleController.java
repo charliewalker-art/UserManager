@@ -23,6 +23,7 @@ public class RoleController {
         }
 
         //get role by id
+    //bonjour charlie manger
         @GetMapping("/{id}")
         public Role getRoleById(@PathVariable Integer id){
             return roleService.getRoleById(id);

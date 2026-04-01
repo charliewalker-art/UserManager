@@ -2,7 +2,7 @@ package com.example.UserManager.service;
 
 import com.example.UserManager.entity.Role;
 import com.example.UserManager.entity.User;
-import com.example.UserManager.exception.UserException;
+import com.example.UserManager.exception.AppException;
 import com.example.UserManager.repository.RoleRepository;
 import com.example.UserManager.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,20 +25,20 @@ public class UserService {
     // get user by id
     public User getUserById(Integer id) {
         return userRepository.findById(id)
-                .orElseThrow(() -> new UserException("User not found"));
+                .orElseThrow(() -> new AppException("User not found"));
     }
 
     // create new user
     public User createUser(User user) {
 
         if (userRepository.existsByEmail(user.getEmail())) {
-            throw new UserException("Email already exists");
+            throw new AppException("Email already exists");
         }
 
         Role role = roleRepository.findByName("USER").orElse(null);
 
         if (role == null) {
-            throw new UserException("Default role USER not found");
+            throw new AppException("Default role USER not found");
         }
 
         user.setRole(role);
@@ -49,7 +49,7 @@ public class UserService {
     // delete user by id
     public void deleteUser(Integer id) {
         if (!userRepository.existsById(id)) {
-            throw new UserException("User not found");
+            throw new AppException("User not found");
         }
 
         userRepository.deleteById(id);
@@ -60,12 +60,12 @@ public class UserService {
         User user = userRepository.findById(id).orElse(null);
 
         if (user == null) {
-            throw new UserException("User not found");
+            throw new AppException("User not found");
         }
 
         if (!user.getEmail().equals(userDetails.getEmail()) &&
                 userRepository.existsByEmail(userDetails.getEmail())) {
-            throw new UserException("Email already exists");
+            throw new AppException("Email already exists");
         }
 
         user.setName(userDetails.getName());

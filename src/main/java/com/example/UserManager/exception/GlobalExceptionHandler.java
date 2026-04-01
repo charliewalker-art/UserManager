@@ -9,8 +9,10 @@ import java.util.Map;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(UserException.class)
-    public ResponseEntity<?> handleUserException(UserException ex) {
+
+
+    @ExceptionHandler(AppException.class)
+    public ResponseEntity<?> handleAppException(AppException ex) {
 
         return ResponseEntity
                 .badRequest()

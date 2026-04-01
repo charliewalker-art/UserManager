@@ -10,7 +10,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
-
 public class UserController {
 
     private final UserService userService;
@@ -27,7 +26,6 @@ public class UserController {
         return userService.getUserById(id);
     }
 
-
     // add new user
     @PostMapping
     public User createUser(@RequestBody User user) {
@@ -41,11 +39,9 @@ public class UserController {
         return "User deleted successfully";
     }
 
-    //update user
+    // update user
     @PutMapping("/{id}")
     public User updateUser(@PathVariable Integer id, @RequestBody User userDetails) {
         return userService.updateUser(id, userDetails);
     }
-
-
 }
